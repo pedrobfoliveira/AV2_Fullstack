@@ -59,14 +59,14 @@ async function criarAgendamento(dados) {
   }
 
   const conflitos = await agendamentoModel.buscarConflitoHorario(
-  dados.espaco_id,
-  dados.data_agendamento,
-  dados.hora_inicio,
-  dados.hora_fim
+    dados.espaco_id,
+    dados.data_agendamento,
+    dados.hora_inicio,
+    dados.hora_fim
   );
 
   if (conflitos.length > 0) {
-    throw new Error("Já existe um agendamento nesse espaço para esse horário.");
+    throw new Error("Já existe um agendamento ou bloqueio nesse horário.");
   }
 
   const cliente = await clienteModel.criarCliente({
@@ -122,16 +122,7 @@ async function criarAgendamento(dados) {
     }
   }
 
-async function atualizarStatusAgendamento(id, status) {
-  if (!statusPermitidos.includes(status)) {
-    throw new Error("Status inválido");
-  }
-
-  return await agendamentoModel.atualizarStatusAgendamento(id, status);
-}
-
-async function excluirAgendamento(id) {
-  return await agendamentoModel.excluirAgendamento(id);
+  return agendamento;
 }
 
 async function bloquearHorario(dados) {
@@ -169,10 +160,22 @@ async function bloquearHorario(dados) {
   return await agendamentoModel.criarBloqueioHorario(dados);
 }
 
+async function atualizarStatusAgendamento(id, status) {
+  if (!statusPermitidos.includes(status)) {
+    throw new Error("Status inválido");
+  }
+
+  return await agendamentoModel.atualizarStatusAgendamento(id, status);
+}
+
+async function excluirAgendamento(id) {
+  return await agendamentoModel.excluirAgendamento(id);
+}
+
 module.exports = {
   listarAgendamentos,
   criarAgendamento,
+  bloquearHorario,
   atualizarStatusAgendamento,
-  excluirAgendamento,
-  bloquearHorario
+  excluirAgendamento
 };
