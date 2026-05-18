@@ -7,7 +7,7 @@
     },
     {
       "source": "/",
-      "destination": "/frontend/pages/index.html"
+      "destination": "/frontend/pages/login.html"
     }
   ]
 }
