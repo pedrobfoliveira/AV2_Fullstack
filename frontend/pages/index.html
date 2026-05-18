@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgendaFlow</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../styles/global.css" />
+</head>
+<body>
+  <header class="topo">
+    <div>
+      <h1>AgendaFlow</h1>
+      <p>Sistema web de agendamento e gestão</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Novo agendamento</h2>
+
+      <form id="form-agendamento">
+        <label>
+            Nome
+            <input type="text" id="cliente_nome" placeholder="Digite seu nome" required />
+        </label>
+
+        <label>
+            Email
+            <input type="email" id="cliente_email" placeholder="Digite seu email" required />
+        </label>
+
+        <label>
+            Telefone
+            <input type="text" id="cliente_telefone" placeholder="Digite seu telefone" />
+        </label>
+
+        <label>
+            Espaço
+            <select id="espaco_id" required></select>
+        </label>
+
+        <label>
+            Data
+            <input type="date" id="data_agendamento" required />
+        </label>
+
+        <label>
+            Hora início
+            <input type="time" id="hora_inicio" required />
+        </label>
+
+        <label>
+            Hora fim
+            <input type="time" id="hora_fim" required />
+        </label>
+
+        <label>
+            Status
+            <select id="status">
+                <option value="agendado">Agendado</option>
+                <option value="confirmado">Confirmado</option>
+                <option value="pendente">Pendente</option>
+                <option value="cancelado">Cancelado</option>
+                <option value="concluido">Concluído</option>
+                <option value="bloqueado">Bloqueado</option>
+          </select>
+        </label>
+
+        <label>
+            Observação
+            <textarea id="observacao" rows="3"></textarea>
+        </label>
+
+        <button type="submit">Criar agendamento</button>
+      </form>
+    </section>
+
+    <section class="card">
+          <h2>Agenda</h2>
+          <div id="lista-agendamentos" class="lista"></div>
+      </section>
+      <section class="card">
+        <h2>Bloquear horário</h2>
+
+        <form id="form-bloqueio">
+          <label>
+            Espaço
+            <select id="bloqueio_espaco_id" required></select>
+          </label>
+
+          <label>
+            Data
+            <input type="date" id="bloqueio_data" required />
+          </label>
+
+          <label>
+            Hora início
+            <input type="time" id="bloqueio_hora_inicio" required />
+          </label>
+
+          <label>
+            Hora fim
+            <input type="time" id="bloqueio_hora_fim" required />
+          </label>
+
+          <label>
+            Motivo do bloqueio
+            <textarea id="bloqueio_observacao" rows="3" placeholder="Ex: reunião, intervalo, manutenção"></textarea>
+          </label>
+
+          <button type="submit">Bloquear horário</button>
+        </form>
+      </section>
+    
+    <section class="card">
+      <h2>Visualização da agenda</h2>
+
+      <div class="filtros-agenda">
+        <label>
+          Tipo de visualização
+          <select id="tipo_visualizacao">
+            <option value="todos">Todos</option>
+            <option value="diaria">Diária</option>
+            <option value="semanal">Semanal</option>
+          </select>
+        </label>
+
+        <label>
+          Data de referência
+          <input type="date" id="data_referencia" />
+        </label>
+
+        <button type="button" id="botao-aplicar-filtro">Aplicar visualização</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="../services/api.js"></script>
+  <script src="../components/agendamentoComponent.js"></script>
+  <script src="../pages/index.js"></script>
+</body>
+</html>
