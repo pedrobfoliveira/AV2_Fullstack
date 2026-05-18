@@ -1,12 +1,14 @@
 const express = require("express");
 const agendamentoController = require("../controllers/agendamentoController");
+const protegerRota = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
 router.get("/", agendamentoController.listarAgendamentos);
-router.post("/", agendamentoController.criarAgendamento);
-router.patch("/:id/status", agendamentoController.atualizarStatusAgendamento);
-router.delete("/:id", agendamentoController.excluirAgendamento);
-router.post("/bloqueios", agendamentoController.bloquearHorario);
+
+router.post("/", protegerRota, agendamentoController.criarAgendamento);
+router.post("/bloqueios", protegerRota, agendamentoController.bloquearHorario);
+router.patch("/:id/status", protegerRota, agendamentoController.atualizarStatusAgendamento);
+router.delete("/:id", protegerRota, agendamentoController.excluirAgendamento);
 
 module.exports = router;

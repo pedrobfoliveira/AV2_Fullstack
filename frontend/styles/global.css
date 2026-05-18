@@ -208,3 +208,9 @@ button:hover {
     grid-template-columns: 1fr;
   }
 }
+
+.status-login {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #1f2937;
+}

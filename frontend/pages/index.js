@@ -6,8 +6,43 @@ const selectBloqueioEspaco = document.getElementById("bloqueio_espaco_id");
 const tipoVisualizacao = document.getElementById("tipo_visualizacao");
 const dataReferencia = document.getElementById("data_referencia");
 const botaoAplicarFiltro = document.getElementById("botao-aplicar-filtro");
+const formLogin = document.getElementById("form-login");
+const statusLogin = document.getElementById("status-login");
 
 let agendamentosCarregados = [];
+
+const formLogin = document.getElementById("form-login");
+const statusLogin = document.getElementById("status-login");
+
+function atualizarStatusLogin() {
+  const token = localStorage.getItem("tokenAgendaFlow");
+
+  if (token) {
+    statusLogin.textContent = "Você está logado como administrador.";
+  } else {
+    statusLogin.textContent = "Você ainda não está logado.";
+  }
+}
+
+formLogin.addEventListener("submit", async function (event) {
+  event.preventDefault();
+
+  const email = document.getElementById("login_email").value;
+  const senha = document.getElementById("login_senha").value;
+
+  const resposta = await fazerLogin(email, senha);
+
+  if (resposta.erro) {
+    alert(resposta.erro);
+    return;
+  }
+
+  localStorage.setItem("tokenAgendaFlow", resposta.token);
+  atualizarStatusLogin();
+
+  alert("Login realizado com sucesso.");
+  formLogin.reset();
+});
 
 async function carregarEspacos() {
   const espacos = await buscarEspacos();
@@ -87,6 +122,7 @@ async function removerAgendamento(id) {
 }
 
 async function iniciarPagina() {
+  atualizarStatusLogin();
   await carregarEspacos();
   await carregarAgendamentos();
 }

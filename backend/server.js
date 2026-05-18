@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const authRoutes = require("./routes/authRoutes");
 require("dotenv").config();
 
 const clienteRoutes = require("./routes/clienteRoutes");
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use("/api/clientes", clienteRoutes);
 app.use("/api/espacos", espacoRoutes);
 app.use("/api/agendamentos", agendamentoRoutes);
+app.use("/api/auth", authRoutes);
 
 app.get("/", (req, res) => {
   res.send("API do AgendaFlow funcionando");
